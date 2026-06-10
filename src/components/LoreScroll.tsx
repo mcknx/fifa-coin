@@ -22,6 +22,14 @@ export default function LoreScroll() {
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const els = gsap.utils.toArray<HTMLElement>(".lore-word");
+      // Reduced motion: reveal the lore fully, skip pin/scrub.
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        els.forEach((el) => {
+          el.style.opacity = "1";
+          el.style.color = el.dataset.hot === "1" ? "#C8E03A" : "#F4E8C6";
+        });
+        return;
+      }
       gsap.to(els, {
         opacity: 1,
         color: (i) => (els[i].dataset.hot === "1" ? "#C8E03A" : "#F4E8C6"),

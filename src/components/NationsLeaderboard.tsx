@@ -48,12 +48,12 @@ export default function NationsLeaderboard() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[680px] border-collapse text-left">
+      <div className="max-h-[540px] overflow-auto">
+        <table className="w-full min-w-full border-collapse text-left md:min-w-[680px]">
           <thead>
-            <tr className="font-mono text-[10px] uppercase tracking-wider text-cream2/50">
-              <th className="px-3 py-2.5 font-medium">#</th>
-              <th className="px-3 py-2.5 font-medium">Nation</th>
+            <tr className="font-mono text-[10px] uppercase tracking-wider text-cream2/50 [&>th]:sticky [&>th]:top-0 [&>th]:z-10 [&>th]:bg-[#0c0712]">
+              <th className="px-2 py-2.5 font-medium sm:px-3">#</th>
+              <th className="px-2 py-2.5 font-medium sm:px-3">Nation</th>
               <th className="px-3 py-2.5 text-right font-medium">Price</th>
               <th className="hidden px-3 py-2.5 text-right font-medium lg:table-cell">
                 Age
@@ -71,14 +71,18 @@ export default function NationsLeaderboard() {
               <th className="hidden px-3 py-2.5 text-right font-medium md:table-cell">
                 Volume
               </th>
-              <th className="px-3 py-2.5 text-right font-medium">Mkt Cap</th>
+              <th className="hidden px-3 py-2.5 text-right font-medium sm:table-cell">
+                Mkt Cap
+              </th>
               <th className="hidden px-3 py-2.5 text-right font-medium xl:table-cell">
                 Liquidity
               </th>
               <th className="hidden px-3 py-2.5 text-right font-medium lg:table-cell">
                 Holders
               </th>
-              <th className="px-3 py-2.5 text-right font-medium">Last 24h</th>
+              <th className="hidden px-3 py-2.5 text-right font-medium sm:table-cell">
+                Last 24h
+              </th>
             </tr>
           </thead>
           <tbody className="font-mono text-[13px] text-cream">
@@ -87,9 +91,9 @@ export default function NationsLeaderboard() {
                 key={r.ticker}
                 className="border-t border-cream/[0.06] transition-colors hover:bg-cream/[0.04]"
               >
-                <td className="px-3 py-2.5 text-cream2/50">{i + 1}</td>
-                <td className="px-3 py-2.5">
-                  <div className="flex items-center gap-2.5">
+                <td className="px-2 py-2.5 text-cream2/50 sm:px-3">{i + 1}</td>
+                <td className="px-2 py-2.5 sm:px-3">
+                  <div className="flex items-center gap-2 sm:gap-2.5">
                     <img
                       src={`https://flagcdn.com/h40/${r.code}.png`}
                       alt=""
@@ -99,7 +103,9 @@ export default function NationsLeaderboard() {
                     <span className="font-sans font-bold tracking-tight text-cream">
                       {r.name}
                     </span>
-                    <span className="text-[11px] text-cream2/50">{r.ticker}</span>
+                    <span className="hidden text-[11px] text-cream2/50 sm:inline">
+                      {r.ticker}
+                    </span>
                   </div>
                 </td>
                 <td className="px-3 py-2.5 text-right tabular-nums">{r.price}</td>
@@ -129,14 +135,16 @@ export default function NationsLeaderboard() {
                 <td className="hidden px-3 py-2.5 text-right tabular-nums text-cream2/80 md:table-cell">
                   {r.vol}
                 </td>
-                <td className="px-3 py-2.5 text-right tabular-nums">{r.mcap}</td>
+                <td className="hidden px-3 py-2.5 text-right tabular-nums sm:table-cell">
+                  {r.mcap}
+                </td>
                 <td className="hidden px-3 py-2.5 text-right tabular-nums text-cream2/80 xl:table-cell">
                   {r.liq}
                 </td>
                 <td className="hidden px-3 py-2.5 text-right tabular-nums text-cream2/80 lg:table-cell">
                   {r.holders}
                 </td>
-                <td className="px-3 py-2.5">
+                <td className="hidden px-3 py-2.5 sm:table-cell">
                   <Sparkline
                     data={r.spark}
                     up={r.c24h >= 0}

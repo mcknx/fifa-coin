@@ -96,6 +96,29 @@ body {
   color: #0f0712;
 }
 
+/* Offset anchor targets so the fixed nav doesn't cover them */
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Visible keyboard focus */
+:focus-visible {
+  outline: 2px solid #c8e03a;
+  outline-offset: 3px;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Page-load staggered reveal */
 @keyframes rise {
   from {

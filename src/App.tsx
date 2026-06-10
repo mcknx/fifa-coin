@@ -37,7 +37,12 @@ function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const links = ["HOME", TOKEN.ticker, "MARKET", "FIXTURES"];
+  const links = [
+    { label: "HOME", href: "#top" },
+    { label: TOKEN.ticker, href: "#flywheel" },
+    { label: "MARKET", href: "#market" },
+    { label: "FIXTURES", href: "#fixtures" }
+  ];
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
@@ -56,13 +61,13 @@ function Nav() {
         <nav className="hidden items-center gap-1 md:flex">
           {links.map((l, i) => (
             <a
-              key={l}
-              href="#top"
+              key={l.label}
+              href={l.href}
               className={`px-4 py-1.5 text-sm font-bold uppercase tracking-wide transition-colors ${
                 i === 0 ? "text-lime" : "text-cream2 hover:text-lime"
               }`}
             >
-              {l}
+              {l.label}
             </a>
           ))}
         </nav>
@@ -220,7 +225,7 @@ function Countdown() {
    ============================================================ */
 function Flywheel() {
   return (
-    <section className="relative px-5 py-24">
+    <section id="flywheel" className="relative px-5 py-24">
       <div className="mx-auto max-w-5xl">
         <SectionLabel n="003" title="The Flywheel" />
         <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">
@@ -315,7 +320,7 @@ function Stat({
 function NextMatch() {
   const m = NEXT_MATCH;
   return (
-    <section className="relative px-5 py-24">
+    <section id="fixtures" className="relative px-5 py-24">
       <div className="mx-auto max-w-5xl">
         <SectionLabel n="005" title={`${m.date} · ${m.time}`} />
         <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">

@@ -25,6 +25,11 @@ export default function CountUp({
     const obj = { v: 0 };
     const fmt = (v: number) =>
       decimals > 0 ? v.toFixed(decimals) : Math.round(v).toLocaleString("en-US");
+    // Reduced motion: show the final value immediately, no count-up.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.textContent = `${prefix}${fmt(to)}${suffix}`;
+      return;
+    }
     const tween = gsap.to(obj, {
       v: to,
       ease: "power2.out",
