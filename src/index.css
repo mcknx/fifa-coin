@@ -61,7 +61,80 @@ body {
   -webkit-text-stroke: 2px #0f0712;
 }
 
+/* Stadium floodlight flicker + crowd shimmer */
+@keyframes floodlight {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  45% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-floodlight {
+  animation: floodlight 6s ease-in-out infinite;
+}
+
+@keyframes crowd-shimmer {
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 14px 0;
+  }
+}
+.animate-crowd {
+  animation: crowd-shimmer 5s ease-in-out infinite;
+}
+
 ::selection {
   background: #c8e03a;
   color: #0f0712;
+}
+
+/* Page-load staggered reveal */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  opacity: 0;
+  animation: rise 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/* Mascot idle bob */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+.idle {
+  animation: bob 4.5s ease-in-out infinite;
+}
+
+/* Slow horizontal drift for oversized marquee text */
+@keyframes drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-drift {
+  animation: drift 30s linear infinite;
 }

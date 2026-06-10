@@ -1,10 +1,12 @@
 # FIFA Coin 🪙⚽
 
 Landing page for **$FIFA** — a pump.fun coin themed around the 2026 FIFA World Cup.
-Cloned in spirit from a competitor (worldcuponpump.com) and rebranded, with the hero
-hook being a **live countdown to the World Cup final (July 19, 2026)**.
+Hero hook: a **live countdown to the World Cup final (July 19, 2026)**.
 
-Built with **Vite + React + TypeScript + Tailwind CSS**.
+Originally cloned in spirit from worldcuponpump.com, then **redesigned to stand on its own** —
+inspired by **dexscreener** (data-rich) and **mumu.ing** (playful, mascot, scroll-driven motion).
+
+Built with **Vite + React + TypeScript + Tailwind CSS + GSAP**.
 
 ## Run it
 
@@ -15,17 +17,25 @@ npm run build    # production build -> dist/
 npm run preview  # preview the production build
 ```
 
+## What makes it distinctive (v2 redesign)
+
+- **Code-drawn stadium background** — floodlights, crowd stands, perspective pitch, all CSS/SVG (no external images). See [`StadiumBackground.tsx`](src/components/StadiumBackground.tsx).
+- **Striker, the mascot** — a custom SVG coin-headed footballer. See [`Mascot.tsx`](src/components/Mascot.tsx).
+- **Scroll "karaoke" lore** — GSAP `ScrollTrigger` pin + word-by-word reveal. See [`LoreScroll.tsx`](src/components/LoreScroll.tsx).
+- **dexscreener-style Nations leaderboard** — Trending / Gainers / New tabs, color-coded 5m/1h/6h/24h %, per-row sparklines. See [`NationsLeaderboard.tsx`](src/components/NationsLeaderboard.tsx).
+- **Count-up stats** (GSAP), drifting oversized marquee, staggered hero reveal.
+
 ## What's real vs. placeholder
 
 | Real (verified) | Placeholder — needs your input |
 | --- | --- |
 | Final date: **July 19, 2026, 19:00 UTC, MetLife Stadium** | `$FIFA` pump.fun link + contract address |
-| Next match: **Mexico vs South Africa, Jun 11, Estadio Azteca** | Burned / marketcap stats |
-| 48-nation format, real qualified nations in ticker/cards | Top gainer/loser numbers (Argentina/Belgium are sample) |
+| Next match: **Mexico vs South Africa, Jun 11, Estadio Azteca** | Burned / marketcap / holders stats |
+| 48-nation format + real qualified nations | Leaderboard prices & % changes (demo data) |
 | Country flags via flagcdn.com | Social links (X / IG / TikTok) |
-|  | Anthems audio (player is styled but has no track wired) |
+|  | Anthems audio (player is styled, no track wired) |
 
-### 👉 Edit these in [`src/data.ts`](src/data.ts)
+### 👉 Edit content in [`src/data.ts`](src/data.ts)
 
 ```ts
 export const FINAL_DATE = '2026-07-19T19:00:00Z'; // countdown target
@@ -33,33 +43,44 @@ export const TOKEN = {
   ticker: '$FIFA',
   pumpFunUrl: '#',   // TODO: paste pump.fun token URL
   contract: 'TBA',   // TODO: paste contract address
-  burned: '...',     // TODO: real stat
-  marketcap: '...',  // TODO: real stat
 };
 export const SOCIALS = { x: '#', instagram: '#', tiktok: '#' }; // TODO
+export const LEADERBOARD = [ /* 18 nations of demo market data */ ];
+export const LORE = "...";  // scroll-reveal narrative (* prefix = lime highlight)
 ```
 
-The countdown, next-match card, movers, and ticker nations are all data-driven from that
-one file — no component edits needed to update content.
+Countdown, leaderboard, next-match, lore, and the nations ticker are all data-driven from
+that one file — no component edits needed to update content.
 
 ## Structure
 
 ```
 src/
-├── App.tsx                # page (all sections, commented)
-├── data.ts                # ← all editable content + TODOs
-├── hooks/useCountdown.ts  # live 1s countdown
+├── App.tsx                       # page composition (all sections, commented)
+├── data.ts                       # ← all editable content + TODOs
+├── hooks/useCountdown.ts         # live 1s countdown
 └── components/
-    ├── Coin.tsx           # $FIFA coin logo (SVG)
-    └── NationCard.tsx     # flag + token-stats card
+    ├── StadiumBackground.tsx     # CSS/SVG night-stadium scene
+    ├── Mascot.tsx                # "Striker" SVG mascot
+    ├── LoreScroll.tsx            # GSAP pinned word-by-word lore
+    ├── NationsLeaderboard.tsx    # dexscreener-style market table
+    ├── Sparkline.tsx             # SVG sparkline
+    ├── CountUp.tsx               # GSAP scroll count-up
+    ├── NationCard.tsx            # flag + token-stats card (Next Match)
+    └── Coin.tsx                  # $FIFA coin logo
 ```
+
+## Proposed next step (not yet built)
+
+A **penalty / free-kick mini-game** with a global leaderboard — the mumu.ing "Bull Slap"
+pattern, reskinned for football. High engagement; meaningful build on its own.
 
 ## Notes
 
-- `.tasks/` holds the cloning reference material (competitor screenshots + extracted design
-  tokens). Safe to delete before shipping.
-- Disclaimer in the footer states this is an independent fan project, not affiliated with FIFA.
+- `.tasks/` holds research + reference material (competitor/dexscreener/mumu screenshots,
+  extracted tokens). Git-ignored; safe to delete.
+- Footer disclaimer: independent fan project, not affiliated with FIFA.
 
 ---
-_Brief: clone worldcuponpump.com → make it our own as "FIFA Coin" with a countdown to the
-final. Built ASAP._
+_Brief: clone worldcuponpump.com → make it our own as "FIFA Coin" with a final countdown →
+then redesign more creatively (stadium bg + dexscreener data + mumu motion). Built ASAP._

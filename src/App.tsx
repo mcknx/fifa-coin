@@ -1,61 +1,51 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Coin from "./components/Coin";
+import Mascot from "./components/Mascot";
 import NationCard from "./components/NationCard";
+import NationsLeaderboard from "./components/NationsLeaderboard";
+import LoreScroll from "./components/LoreScroll";
+import CountUp from "./components/CountUp";
+import StadiumBackground from "./components/StadiumBackground";
 import { useCountdown } from "./hooks/useCountdown";
-import {
-  FINAL_DATE,
-  NATIONS,
-  NEXT_MATCH,
-  STEPS,
-  TOKEN,
-  TOP_GAINER,
-  TOP_LOSER,
-  SOCIALS
-} from "./data";
+import { FINAL_DATE, NEXT_MATCH, STEPS, TOKEN, NATIONS, SOCIALS } from "./data";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-ink">
-      <Marquee />
+    <div className="relative min-h-screen">
+      <StadiumBackground />
       <Nav />
       <Hero />
+      <GiantMarquee />
       <Countdown />
-      <TokenStrip />
-      <HowItWorks />
+      <LoreScroll />
+      <Flywheel />
+      <Market />
       <NextMatch />
-      <Movers />
       <Footer />
     </div>
   );
 }
 
 /* ============================================================
-   MARQUEE — scrolling nations ticker
-   ============================================================ */
-function Marquee() {
-  const items = [...NATIONS, ...NATIONS];
-  return (
-    <div className="overflow-hidden border-b-2 border-ink bg-lime py-1.5">
-      <div className="animate-marquee flex w-max gap-8 whitespace-nowrap font-narrow text-xs font-bold uppercase tracking-wider text-ink">
-        {items.map((n, i) => (
-          <span key={i} className="flex items-center gap-8">
-            {n}
-            <span className="text-ink/50">●</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ============================================================
-   NAV
+   NAV — transparent, blurs on scroll
    ============================================================ */
 function Nav() {
+  const [scrolled, setScrolled] = useState(false);
   const t = useCountdown(FINAL_DATE);
-  const links = ["HOME", `${TOKEN.ticker}`, "COUNTRIES", "FIXTURES"];
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const links = ["HOME", TOKEN.ticker, "MARKET", "FIXTURES"];
   return (
-    <header className="sticky top-0 z-50 border-b border-cream/10 bg-ink/85 backdrop-blur">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        scrolled
+          ? "border-b border-cream/10 bg-ink/80 backdrop-blur-md"
+          : "bg-transparent"
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
         <a href="#top" className="flex items-center gap-2.5">
           <Coin className="h-9 w-9" />
@@ -69,7 +59,7 @@ function Nav() {
               key={l}
               href="#top"
               className={`px-4 py-1.5 text-sm font-bold uppercase tracking-wide transition-colors ${
-                i === 0 ? "bg-lime text-ink" : "text-cream2 hover:text-lime"
+                i === 0 ? "text-lime" : "text-cream2 hover:text-lime"
               }`}
             >
               {l}
@@ -83,7 +73,7 @@ function Nav() {
           </div>
           <a
             href={TOKEN.pumpFunUrl}
-            className="bg-grape px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-cream transition-colors hover:bg-grape2"
+            className="bg-lime px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-ink shadow-hard transition-transform hover:-translate-y-0.5"
           >
             Buy {TOKEN.ticker}
           </a>
@@ -94,54 +84,95 @@ function Nav() {
 }
 
 /* ============================================================
-   HERO — geometric color-block banner
+   HERO — full-screen, mascot + oversized wordmark
    ============================================================ */
 function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-ink px-5 pt-10 pb-16 sm:pt-16"
+      className="relative flex min-h-screen items-center overflow-hidden px-5 pt-24 pb-12"
     >
-      <div className="mx-auto max-w-6xl">
-        <div className="relative overflow-hidden border-2 border-ink">
-          {/* Color blocks */}
-          <div className="absolute inset-0 bg-flame" />
-          <div className="absolute -left-16 top-0 h-full w-2/3 -skew-x-12 bg-grape" />
-          <div className="absolute right-0 top-0 h-full w-1/3 skew-x-12 bg-lime" />
-          <div className="absolute bottom-0 left-1/4 h-1/2 w-1/2 bg-maroon/70 mix-blend-multiply" />
-          <div className="grain absolute inset-0" />
-
-          {/* Content */}
-          <div className="relative flex flex-col items-center px-6 py-14 text-center sm:py-20">
-            <Coin className="mb-5 h-16 w-16 drop-shadow-[3px_3px_0_#0F0712]" />
-            <p className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.3em] text-ink">
-              Exclusively on pump.fun
-            </p>
-            <h1 className="font-display text-6xl leading-[0.85] tracking-tight text-cream drop-shadow-[4px_4px_0_#FF3340] sm:text-8xl">
-              FIFA
-              <br />
-              COIN
-            </h1>
-            <p className="mt-5 max-w-md font-narrow text-base font-semibold uppercase leading-snug tracking-wide text-cream">
-              Every nation on-chain. The new era of football, settled at the final
-              whistle.
-            </p>
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        {/* Left: copy */}
+        <div className="text-center lg:text-left">
+          <p
+            className="rise mb-4 font-mono text-xs font-bold uppercase tracking-[0.35em] text-lime"
+            style={{ animationDelay: "0.05s" }}
+          >
+            ● Exclusively on pump.fun
+          </p>
+          <h1
+            className="rise font-display text-[clamp(3.5rem,11vw,9rem)] leading-[0.82] tracking-tight text-cream drop-shadow-[5px_5px_0_#FF3340]"
+            style={{ animationDelay: "0.12s" }}
+          >
+            FIFA
+            <br />
+            COIN
+          </h1>
+          <p
+            className="rise mx-auto mt-6 max-w-md font-narrow text-lg font-semibold uppercase leading-snug tracking-wide text-cream2 lg:mx-0"
+            style={{ animationDelay: "0.2s" }}
+          >
+            48 nations. One trophy. Every chant, minted on-chain — settled at the final
+            whistle.
+          </p>
+          <div
+            className="rise mt-8 flex flex-col items-center gap-3 sm:flex-row lg:items-start lg:justify-start"
+            style={{ animationDelay: "0.28s" }}
+          >
             <a
               href={TOKEN.pumpFunUrl}
-              className="group mt-8 inline-flex items-center gap-3 bg-lime px-10 py-4 font-display text-sm uppercase tracking-wide text-ink shadow-hard transition-transform hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-3 bg-lime px-9 py-4 font-display text-sm uppercase tracking-wide text-ink shadow-hard transition-transform hover:-translate-y-0.5"
             >
               Enter the Stadium
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
+            <a
+              href="#market"
+              className="inline-flex items-center gap-2 border-2 border-cream/25 px-7 py-4 font-display text-sm uppercase tracking-wide text-cream transition-colors hover:border-lime hover:text-lime"
+            >
+              View the Market
+            </a>
           </div>
         </div>
+
+        {/* Right: mascot */}
+        <div
+          className="rise relative mx-auto w-[64%] max-w-sm lg:w-full"
+          style={{ animationDelay: "0.3s" }}
+        >
+          <div className="absolute inset-0 -z-10 rounded-full bg-[radial-gradient(circle,rgba(200,224,58,0.22),transparent_62%)] blur-2xl" />
+          <Mascot className="idle h-auto w-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.5)]" />
+        </div>
+      </div>
+
+      {/* scroll cue */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-cream2/50">
+        Scroll ↓
       </div>
     </section>
   );
 }
 
 /* ============================================================
-   COUNTDOWN — to the World Cup FINAL (July 19, 2026)
+   GIANT MARQUEE — oversized text drifting horizontally
+   ============================================================ */
+function GiantMarquee() {
+  return (
+    <div className="overflow-hidden border-y border-cream/10 bg-ink/40 py-3 backdrop-blur-sm">
+      <div className="animate-drift flex w-max whitespace-nowrap font-display text-[9vw] uppercase leading-none text-cream/[0.07]">
+        {Array.from({ length: 2 }).map((_, k) => (
+          <span key={k} className="px-5">
+            FIFA COIN · CHAMPIONS MINTED ON-CHAIN · 48 NATIONS · ONE TROPHY ·{" "}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   COUNTDOWN — to the World Cup FINAL
    ============================================================ */
 function Countdown() {
   const t = useCountdown(FINAL_DATE);
@@ -152,11 +183,11 @@ function Countdown() {
     { label: "SECONDS", value: t.seconds }
   ];
   return (
-    <section className="pitch-lines relative border-y-2 border-cream/10 bg-panel px-5 py-16">
+    <section className="relative px-5 py-20">
       <div className="mx-auto max-w-5xl text-center">
-        <div className="mb-2 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-lime">
-          <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-lime" /> Kickoff
-          countdown
+        <div className="mb-3 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-lime">
+          <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-lime" /> 002 /
+          Kickoff
         </div>
         <h2 className="font-block text-4xl uppercase text-cream sm:text-6xl">
           The Final Kicks Off In
@@ -165,7 +196,7 @@ function Countdown() {
           {units.map((u) => (
             <div
               key={u.label}
-              className="border-2 border-cream/15 bg-ink px-2 py-6 shadow-hard-flame"
+              className="border-2 border-cream/12 bg-ink/55 px-2 py-6 shadow-hard-flame backdrop-blur-sm"
             >
               <div className="font-block text-5xl tabular-nums text-lime sm:text-7xl">
                 {String(u.value).padStart(2, "0")}
@@ -185,83 +216,33 @@ function Countdown() {
 }
 
 /* ============================================================
-   TOKEN STRIP — burn + marketcap + buy CTA
+   FLYWHEEL — how it works (text-on-background, no cards)
    ============================================================ */
-function TokenStrip() {
+function Flywheel() {
   return (
-    <section className="border-b-2 border-cream/10 bg-ink px-5 py-10">
-      <div className="mx-auto flex max-w-6xl flex-col items-stretch gap-4 md:flex-row md:items-center">
-        <Metric
-          label={`${TOKEN.ticker} BURNED`}
-          value={TOKEN.burned}
-          accent="text-flame"
-        />
-        <Metric
-          label="TOTAL ECOSYSTEM MARKETCAP"
-          value={TOKEN.marketcap}
-          accent="text-lime"
-        />
-        <a
-          href={TOKEN.pumpFunUrl}
-          className="flex flex-1 items-center justify-center bg-grape px-8 py-6 text-center font-display text-base uppercase tracking-wide text-cream transition-colors hover:bg-grape2"
-        >
-          Buy {TOKEN.ticker} on pump.fun →
-        </a>
-      </div>
-    </section>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  accent
-}: {
-  label: string;
-  value: string;
-  accent: string;
-}) {
-  return (
-    <div className="flex-1 border-2 border-cream/10 bg-panel px-6 py-5">
-      <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-cream2">
-        {label}
-      </div>
-      <div className={`mt-1 font-block text-3xl tabular-nums ${accent}`}>{value}</div>
-    </div>
-  );
-}
-
-/* ============================================================
-   HOW IT WORKS — the flywheel
-   ============================================================ */
-function HowItWorks() {
-  return (
-    <section className="bg-ink px-5 py-20">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeading kicker={`Live · ${TOKEN.ticker}`}>How It Works</SectionHeading>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s) => (
+    <section className="relative px-5 py-24">
+      <div className="mx-auto max-w-5xl">
+        <SectionLabel n="003" title="The Flywheel" />
+        <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">
+          Fees In. Supply Down.
+        </h2>
+        <div className="mt-14 space-y-10">
+          {STEPS.map((s, i) => (
             <div
               key={s.n}
-              className="group relative flex flex-col border-2 border-cream/15 bg-panel p-6 transition-colors hover:border-lime"
+              className={`flex flex-col gap-3 border-b border-cream/10 pb-8 md:flex-row md:items-baseline md:gap-10 ${
+                i % 2 ? "md:flex-row-reverse md:text-right" : ""
+              }`}
             >
-              <div className="mb-4 flex items-center justify-between">
-                <span className="font-mono text-[11px] uppercase tracking-wider text-lime">
-                  Step {s.n} / 04
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-cream2">
-                  {TOKEN.ticker}
-                </span>
-              </div>
-              <div className="font-block text-6xl text-cream/15 transition-colors group-hover:text-lime/30">
+              <div className="font-block text-7xl leading-none text-lime/80 md:text-8xl">
                 {s.n}
               </div>
-              <h3 className="mt-1 font-display text-2xl uppercase text-cream">
-                {s.title}
-              </h3>
-              <p className="mt-3 font-narrow text-sm leading-relaxed text-cream2">
-                {s.body}
-              </p>
+              <div className="md:flex-1">
+                <h3 className="font-display text-2xl uppercase text-cream">{s.title}</h3>
+                <p className="mt-2 max-w-xl font-narrow text-base leading-relaxed text-cream2 md:max-w-none">
+                  {s.body}
+                </p>
+              </div>
             </div>
           ))}
         </div>
@@ -271,20 +252,81 @@ function HowItWorks() {
 }
 
 /* ============================================================
+   MARKET — stats count-up + dexscreener-style leaderboard
+   ============================================================ */
+function Market() {
+  return (
+    <section id="market" className="relative px-5 py-24">
+      <div className="mx-auto max-w-6xl">
+        <SectionLabel n="004" title="Live Market" />
+        <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">
+          The Nations Market
+        </h2>
+
+        {/* Stat row (count-up) */}
+        <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-cream/12 bg-cream/10 lg:grid-cols-4">
+          <Stat label={`${TOKEN.ticker} burned`} accent="text-flame">
+            <CountUp to={76938296} />
+          </Stat>
+          <Stat label="Ecosystem mcap" accent="text-lime">
+            <CountUp to={10.8} prefix="$" suffix="M" decimals={1} />
+          </Stat>
+          <Stat label="Nations on-chain" accent="text-cream">
+            <CountUp to={48} />
+          </Stat>
+          <Stat label="Total holders" accent="text-cream">
+            <CountUp to={19847} />
+          </Stat>
+        </div>
+
+        {/* Leaderboard */}
+        <div className="mt-6">
+          <NationsLeaderboard />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Stat({
+  label,
+  accent,
+  children
+}: {
+  label: string;
+  accent: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="bg-ink/70 px-5 py-6 backdrop-blur-sm">
+      <div className={`font-block text-2xl tabular-nums sm:text-3xl ${accent}`}>
+        {children}
+      </div>
+      <div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-cream2/60">
+        {label}
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
    NEXT MATCH
    ============================================================ */
 function NextMatch() {
   const m = NEXT_MATCH;
   return (
-    <section className="border-y-2 border-cream/10 bg-panel px-5 py-20">
+    <section className="relative px-5 py-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeading kicker={`${m.date} · ${m.time}`}>Next Match</SectionHeading>
+        <SectionLabel n="005" title={`${m.date} · ${m.time}`} />
+        <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">
+          Next Match
+        </h2>
         <p className="mt-2 text-center font-narrow text-sm uppercase tracking-wider text-cream2">
           {m.venue} · {m.group}
         </p>
-        <div className="mt-10 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
+        <div className="mt-12 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr]">
           <NationCard nation={m.home} />
-          <div className="flex justify-center py-2 font-block text-3xl text-flame md:py-0">
+          <div className="flex justify-center py-2 font-block text-4xl text-flame md:py-0">
             VS
           </div>
           <NationCard nation={m.away} />
@@ -295,40 +337,19 @@ function NextMatch() {
 }
 
 /* ============================================================
-   TOP GAINER & TOP LOSER
-   ============================================================ */
-function Movers() {
-  return (
-    <section className="bg-ink px-5 py-20">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeading kicker="24H Movers">Top Gainer &amp; Top Loser</SectionHeading>
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          <div>
-            <div className="mb-2 font-mono text-xs uppercase tracking-wider text-lime">
-              ▲ Top Gainer
-            </div>
-            <NationCard nation={TOP_GAINER} />
-          </div>
-          <div>
-            <div className="mb-2 font-mono text-xs uppercase tracking-wider text-flame">
-              ▼ Top Loser
-            </div>
-            <NationCard nation={TOP_LOSER} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================
-   FOOTER — wordmark, anthems player, socials, disclaimer
+   FOOTER
    ============================================================ */
 function Footer() {
   return (
-    <footer className="border-t-2 border-cream/10 bg-panel px-5 pt-14 pb-8">
+    <footer className="relative border-t border-cream/10 bg-ink/70 px-5 pt-16 pb-8 backdrop-blur-sm">
       <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+        {/* Nations strip */}
+        <div className="mb-12 flex flex-wrap justify-center gap-x-5 gap-y-2 font-narrow text-xs font-bold uppercase tracking-wider text-cream2/40">
+          {NATIONS.map((n) => (
+            <span key={n}>{n}</span>
+          ))}
+        </div>
+        <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-between">
           <a href="#top" className="flex items-center gap-3">
             <Coin className="h-12 w-12" />
             <span className="font-display text-3xl tracking-tight text-cream">
@@ -342,7 +363,7 @@ function Footer() {
             <Social href={SOCIALS.tiktok} label="TT" />
           </div>
         </div>
-        <p className="mt-10 max-w-3xl font-narrow text-[11px] uppercase leading-relaxed tracking-wider text-cream2/60">
+        <p className="mt-10 max-w-3xl font-narrow text-[11px] uppercase leading-relaxed tracking-wider text-cream2/50">
           FIFA Coin is an independent fan project. It is not affiliated with, endorsed by,
           or associated with FIFA, the FIFA World Cup, or any national team or football
           federation. All team names and related marks belong to their respective owners.
@@ -360,7 +381,7 @@ function Footer() {
 function AnthemsPlayer() {
   const [playing, setPlaying] = useState(false);
   return (
-    <div className="flex items-center gap-3 border border-cream/15 bg-ink px-4 py-2.5">
+    <div className="flex items-center gap-3 border border-cream/15 bg-ink/60 px-4 py-2.5">
       <button
         onClick={() => setPlaying((p) => !p)}
         className="flex h-8 w-8 items-center justify-center bg-lime text-ink"
@@ -392,17 +413,12 @@ function Social({ href, label }: { href: string; label: string }) {
 }
 
 /* ============================================================
-   Shared section heading
+   Shared section label
    ============================================================ */
-function SectionHeading({ kicker, children }: { kicker: string; children: ReactNode }) {
+function SectionLabel({ n, title }: { n: string; title: string }) {
   return (
-    <div className="text-center">
-      <div className="mb-2 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-lime">
-        <span className="h-1.5 w-1.5 rounded-full bg-lime" /> {kicker}
-      </div>
-      <h2 className="font-display text-4xl uppercase text-cream sm:text-5xl">
-        {children}
-      </h2>
+    <div className="text-center font-mono text-xs uppercase tracking-[0.3em] text-lime/70">
+      {n} / {title}
     </div>
   );
 }
