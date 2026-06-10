@@ -29,7 +29,7 @@ export default function NationsLeaderboard() {
               key={t}
               onClick={() => setTab(t)}
               className={`px-3 py-1.5 text-xs font-extrabold uppercase tracking-wide transition-colors ${
-                tab === t ? "bg-lime text-ink" : "text-cream2 hover:text-lime"
+                tab === t ? "bg-cyan text-ink" : "text-cream2 hover:text-lime"
               }`}
             >
               {t}
@@ -38,7 +38,7 @@ export default function NationsLeaderboard() {
         </div>
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-cream2">
-            <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-lime" /> Live
+            <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-cyan" /> Live
           </span>
           <div className="hidden items-center gap-2 rounded border border-cream/12 px-2.5 py-1 text-cream2/60 sm:flex">
             <span className="text-xs">⌕</span>

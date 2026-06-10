@@ -61,6 +61,39 @@ body {
   -webkit-text-stroke: 2px #0f0712;
 }
 
+/* ---- FIFA-Heroes treatments: angular glossy buttons + electric glow ---- */
+.clip-angular {
+  clip-path: polygon(
+    11px 0,
+    100% 0,
+    100% calc(100% - 11px),
+    calc(100% - 11px) 100%,
+    0 100%,
+    0 11px
+  );
+}
+.btn-glossy {
+  position: relative;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0) 46%
+  );
+}
+.glow-cyan {
+  text-shadow:
+    0 0 28px rgba(0, 221, 255, 0.55),
+    0 0 6px rgba(0, 221, 255, 0.45);
+}
+.ring-glow-cyan {
+  box-shadow:
+    0 0 0 1px rgba(0, 221, 255, 0.5),
+    0 0 30px rgba(0, 221, 255, 0.25);
+}
+.hero-skew {
+  transform: skewX(-6deg);
+}
+
 /* Stadium floodlight flicker + crowd shimmer */
 @keyframes floodlight {
   0%,

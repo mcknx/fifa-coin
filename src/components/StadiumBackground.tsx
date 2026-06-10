@@ -8,15 +8,15 @@ export default function StadiumBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-ink">
       {/* Night sky */}
-      <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,#1b1030_0%,#0f0712_55%,#080510_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-10%,#0a1726_0%,#060912_55%,#02040a_100%)]" />
 
-      {/* Floodlight glow — top corners */}
-      <div className="animate-floodlight absolute -left-24 -top-24 h-[55vh] w-[55vh] rounded-full bg-[radial-gradient(circle,rgba(200,224,58,0.22),transparent_60%)] blur-2xl" />
+      {/* Floodlight glow — top corners (electric cyan) */}
+      <div className="animate-floodlight absolute -left-24 -top-24 h-[55vh] w-[55vh] rounded-full bg-[radial-gradient(circle,rgba(0,221,255,0.24),transparent_60%)] blur-2xl" />
       <div className="animate-floodlight absolute -right-24 -top-24 h-[55vh] w-[55vh] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.16),transparent_60%)] blur-2xl [animation-delay:1.5s]" />
 
       {/* Floodlight beams sweeping down toward the pitch */}
-      <div className="absolute left-[8%] top-0 h-[80vh] w-[34vw] -rotate-12 bg-[linear-gradient(180deg,rgba(244,232,198,0.10),transparent_70%)] blur-xl" />
-      <div className="absolute right-[8%] top-0 h-[80vh] w-[34vw] rotate-12 bg-[linear-gradient(180deg,rgba(200,224,58,0.09),transparent_70%)] blur-xl" />
+      <div className="absolute left-[8%] top-0 h-[80vh] w-[34vw] -rotate-12 bg-[linear-gradient(180deg,rgba(255,255,255,0.10),transparent_70%)] blur-xl" />
+      <div className="absolute right-[8%] top-0 h-[80vh] w-[34vw] rotate-12 bg-[linear-gradient(180deg,rgba(0,221,255,0.12),transparent_70%)] blur-xl" />
 
       {/* Floodlight rigs (poles + lamp banks) */}
       <FloodlightRig className="left-[6%]" />

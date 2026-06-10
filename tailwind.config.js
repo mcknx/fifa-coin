@@ -17,9 +17,13 @@ export default {
         pitch: "#007A4D",
         pitch2: "#006847",
         maroon: "#6F1922",
-        gold: "#FAE042"
+        gold: "#FAE042",
+        cyan: "#00DDFF",
+        azure: "#3175FF",
+        ink2: "#05070D"
       },
       fontFamily: {
+        hero: ["Anton", '"Archivo Black"', "system-ui", "sans-serif"],
         display: ['"Archivo Black"', "system-ui", "sans-serif"],
         block: ['"Bowlby One SC"', "system-ui", "sans-serif"],
         sans: ["Archivo", "system-ui", "sans-serif"],

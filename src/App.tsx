@@ -13,6 +13,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen">
       <StadiumBackground />
+      <div className="fixed inset-x-0 top-0 z-[60] h-1 bg-[linear-gradient(90deg,#00DDFF,#3175FF,#00DDFF)]" />
       <Nav />
       <Hero />
       <GiantMarquee />
@@ -64,7 +65,7 @@ function Nav() {
               key={l.label}
               href={l.href}
               className={`px-4 py-1.5 text-sm font-bold uppercase tracking-wide transition-colors ${
-                i === 0 ? "text-lime" : "text-cream2 hover:text-lime"
+                i === 0 ? "text-cyan" : "text-cream2 hover:text-cyan"
               }`}
             >
               {l.label}
@@ -78,7 +79,7 @@ function Nav() {
           </div>
           <a
             href={TOKEN.pumpFunUrl}
-            className="bg-lime px-4 py-2 text-xs font-extrabold uppercase tracking-wide text-ink shadow-hard transition-transform hover:-translate-y-0.5"
+            className="clip-angular btn-glossy bg-cyan px-5 py-2 text-xs font-extrabold uppercase tracking-wide text-ink transition-transform hover:-translate-y-0.5"
           >
             Buy {TOKEN.ticker}
           </a>
@@ -101,18 +102,18 @@ function Hero() {
         {/* Left: copy */}
         <div className="text-center lg:text-left">
           <p
-            className="rise mb-4 font-mono text-xs font-bold uppercase tracking-[0.35em] text-lime"
+            className="rise mb-4 font-mono text-xs font-bold uppercase tracking-[0.35em] text-cyan"
             style={{ animationDelay: "0.05s" }}
           >
             ● Exclusively on pump.fun
           </p>
           <h1
-            className="rise font-display text-[clamp(3.5rem,11vw,9rem)] leading-[0.82] tracking-tight text-cream drop-shadow-[5px_5px_0_#FF3340]"
+            className="rise hero-skew font-hero text-[clamp(4rem,12.5vw,10rem)] uppercase leading-[0.8] tracking-wide text-white drop-shadow-[4px_5px_0_rgba(0,0,0,0.55)]"
             style={{ animationDelay: "0.12s" }}
           >
             FIFA
             <br />
-            COIN
+            <span className="glow-cyan text-cyan">COIN</span>
           </h1>
           <p
             className="rise mx-auto mt-6 max-w-md font-narrow text-lg font-semibold uppercase leading-snug tracking-wide text-cream2 lg:mx-0"
@@ -127,14 +128,14 @@ function Hero() {
           >
             <a
               href={TOKEN.pumpFunUrl}
-              className="group inline-flex items-center gap-3 bg-lime px-9 py-4 font-display text-sm uppercase tracking-wide text-ink shadow-hard transition-transform hover:-translate-y-0.5"
+              className="clip-angular btn-glossy group inline-flex items-center gap-3 bg-cyan px-9 py-4 font-display text-sm uppercase tracking-wide text-ink transition-transform hover:-translate-y-0.5"
             >
               Enter the Stadium
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </a>
             <a
               href="#market"
-              className="inline-flex items-center gap-2 border-2 border-cream/25 px-7 py-4 font-display text-sm uppercase tracking-wide text-cream transition-colors hover:border-lime hover:text-lime"
+              className="clip-angular inline-flex items-center gap-2 border-2 border-cyan/40 px-7 py-4 font-display text-sm uppercase tracking-wide text-cream transition-colors hover:border-cyan hover:text-cyan"
             >
               View the Market
             </a>
@@ -146,7 +147,7 @@ function Hero() {
           className="rise relative mx-auto w-[64%] max-w-sm lg:w-full"
           style={{ animationDelay: "0.3s" }}
         >
-          <div className="absolute inset-0 -z-10 rounded-full bg-[radial-gradient(circle,rgba(200,224,58,0.22),transparent_62%)] blur-2xl" />
+          <div className="absolute inset-0 -z-10 rounded-full bg-[radial-gradient(circle,rgba(0,221,255,0.22),transparent_62%)] blur-2xl" />
           <Mascot className="idle h-auto w-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.5)]" />
         </div>
       </div>
@@ -190,8 +191,8 @@ function Countdown() {
   return (
     <section className="relative px-5 py-20">
       <div className="mx-auto max-w-5xl text-center">
-        <div className="mb-3 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-lime">
-          <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-lime" /> 002 /
+        <div className="mb-3 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-cyan">
+          <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full bg-cyan" /> 002 /
           Kickoff
         </div>
         <h2 className="font-block text-4xl uppercase text-cream sm:text-6xl">
@@ -203,7 +204,7 @@ function Countdown() {
               key={u.label}
               className="border-2 border-cream/12 bg-ink/55 px-2 py-6 shadow-hard-flame backdrop-blur-sm"
             >
-              <div className="font-block text-5xl tabular-nums text-lime sm:text-7xl">
+              <div className="font-block text-5xl tabular-nums text-cyan glow-cyan sm:text-7xl">
                 {String(u.value).padStart(2, "0")}
               </div>
               <div className="mt-2 font-mono text-[11px] uppercase tracking-[0.25em] text-cream2">
@@ -228,7 +229,7 @@ function Flywheel() {
     <section id="flywheel" className="relative px-5 py-24">
       <div className="mx-auto max-w-5xl">
         <SectionLabel n="003" title="The Flywheel" />
-        <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">
+        <h2 className="mt-3 text-center font-hero hero-skew text-5xl uppercase text-white sm:text-6xl">
           Fees In. Supply Down.
         </h2>
         <div className="mt-14 space-y-10">
@@ -239,7 +240,7 @@ function Flywheel() {
                 i % 2 ? "md:flex-row-reverse md:text-right" : ""
               }`}
             >
-              <div className="font-block text-7xl leading-none text-lime/80 md:text-8xl">
+              <div className="font-block text-7xl leading-none text-cyan/80 md:text-8xl">
                 {s.n}
               </div>
               <div className="md:flex-1">
@@ -264,7 +265,7 @@ function Market() {
     <section id="market" className="relative px-5 py-24">
       <div className="mx-auto max-w-6xl">
         <SectionLabel n="004" title="Live Market" />
-        <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">
+        <h2 className="mt-3 text-center font-hero hero-skew text-5xl uppercase text-white sm:text-6xl">
           The Nations Market
         </h2>
 
@@ -273,7 +274,7 @@ function Market() {
           <Stat label={`${TOKEN.ticker} burned`} accent="text-flame">
             <CountUp to={76938296} />
           </Stat>
-          <Stat label="Ecosystem mcap" accent="text-lime">
+          <Stat label="Ecosystem mcap" accent="text-cyan">
             <CountUp to={10.8} prefix="$" suffix="M" decimals={1} />
           </Stat>
           <Stat label="Nations on-chain" accent="text-cream">
@@ -323,7 +324,7 @@ function NextMatch() {
     <section id="fixtures" className="relative px-5 py-24">
       <div className="mx-auto max-w-5xl">
         <SectionLabel n="005" title={`${m.date} · ${m.time}`} />
-        <h2 className="mt-3 text-center font-display text-4xl uppercase text-cream sm:text-5xl">
+        <h2 className="mt-3 text-center font-hero hero-skew text-5xl uppercase text-white sm:text-6xl">
           Next Match
         </h2>
         <p className="mt-2 text-center font-narrow text-sm uppercase tracking-wider text-cream2">
@@ -389,7 +390,7 @@ function AnthemsPlayer() {
     <div className="flex items-center gap-3 border border-cream/15 bg-ink/60 px-4 py-2.5">
       <button
         onClick={() => setPlaying((p) => !p)}
-        className="flex h-8 w-8 items-center justify-center bg-lime text-ink"
+        className="flex h-8 w-8 items-center justify-center bg-cyan text-ink"
         aria-label={playing ? "Pause anthem" : "Play anthem"}
       >
         {playing ? "❚❚" : "▶"}
@@ -410,7 +411,7 @@ function Social({ href, label }: { href: string; label: string }) {
   return (
     <a
       href={href}
-      className="flex h-10 w-10 items-center justify-center border border-cream/15 font-mono text-xs font-bold text-cream2 transition-colors hover:border-lime hover:text-lime"
+      className="flex h-10 w-10 items-center justify-center border border-cream/15 font-mono text-xs font-bold text-cream2 transition-colors hover:border-cyan hover:text-cyan"
     >
       {label}
     </a>
@@ -422,7 +423,7 @@ function Social({ href, label }: { href: string; label: string }) {
    ============================================================ */
 function SectionLabel({ n, title }: { n: string; title: string }) {
   return (
-    <div className="text-center font-mono text-xs uppercase tracking-[0.3em] text-lime/70">
+    <div className="text-center font-mono text-xs uppercase tracking-[0.3em] text-cyan/70">
       {n} / {title}
     </div>
   );
