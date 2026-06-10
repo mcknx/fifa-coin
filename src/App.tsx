@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Coin from "./components/Coin";
-import Mascot from "./components/Mascot";
+import CinematicHero from "./components/CinematicHero";
 import NationCard from "./components/NationCard";
 import NationsLeaderboard from "./components/NationsLeaderboard";
 import LoreScroll from "./components/LoreScroll";
@@ -15,7 +15,7 @@ export default function App() {
       <StadiumBackground />
       <div className="fixed inset-x-0 top-0 z-[60] h-1 bg-[linear-gradient(90deg,#00DDFF,#3175FF,#00DDFF)]" />
       <Nav />
-      <Hero />
+      <CinematicHero />
       <GiantMarquee />
       <Countdown />
       <LoreScroll />
@@ -90,86 +90,17 @@ function Nav() {
 }
 
 /* ============================================================
-   HERO — full-screen, mascot + oversized wordmark
-   ============================================================ */
-function Hero() {
-  return (
-    <section
-      id="top"
-      className="relative flex min-h-screen items-center overflow-hidden px-5 pt-24 pb-12"
-    >
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-        {/* Left: copy */}
-        <div className="text-center lg:text-left">
-          <p
-            className="rise mb-4 font-mono text-xs font-bold uppercase tracking-[0.35em] text-cyan"
-            style={{ animationDelay: "0.05s" }}
-          >
-            ● Exclusively on pump.fun
-          </p>
-          <h1
-            className="rise hero-skew font-hero text-[clamp(4rem,12.5vw,10rem)] uppercase leading-[0.8] tracking-wide text-white drop-shadow-[4px_5px_0_rgba(0,0,0,0.55)]"
-            style={{ animationDelay: "0.12s" }}
-          >
-            FIFA
-            <br />
-            <span className="glow-cyan text-cyan">COIN</span>
-          </h1>
-          <p
-            className="rise mx-auto mt-6 max-w-md font-narrow text-lg font-semibold uppercase leading-snug tracking-wide text-cream2 lg:mx-0"
-            style={{ animationDelay: "0.2s" }}
-          >
-            48 nations. One trophy. Every chant, minted on-chain — settled at the final
-            whistle.
-          </p>
-          <div
-            className="rise mt-8 flex flex-col items-center gap-3 sm:flex-row lg:items-start lg:justify-start"
-            style={{ animationDelay: "0.28s" }}
-          >
-            <a
-              href={TOKEN.pumpFunUrl}
-              className="clip-angular btn-glossy group inline-flex items-center gap-3 bg-cyan px-9 py-4 font-display text-sm uppercase tracking-wide text-ink transition-transform hover:-translate-y-0.5"
-            >
-              Enter the Stadium
-              <span className="transition-transform group-hover:translate-x-1">→</span>
-            </a>
-            <a
-              href="#market"
-              className="clip-angular inline-flex items-center gap-2 border-2 border-cyan/40 px-7 py-4 font-display text-sm uppercase tracking-wide text-cream transition-colors hover:border-cyan hover:text-cyan"
-            >
-              View the Market
-            </a>
-          </div>
-        </div>
-
-        {/* Right: mascot */}
-        <div
-          className="rise relative mx-auto w-[64%] max-w-sm lg:w-full"
-          style={{ animationDelay: "0.3s" }}
-        >
-          <div className="absolute inset-0 -z-10 rounded-full bg-[radial-gradient(circle,rgba(0,221,255,0.22),transparent_62%)] blur-2xl" />
-          <Mascot className="idle h-auto w-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.5)]" />
-        </div>
-      </div>
-
-      {/* scroll cue */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-cream2/50">
-        Scroll ↓
-      </div>
-    </section>
-  );
-}
-
-/* ============================================================
    GIANT MARQUEE — oversized text drifting horizontally
    ============================================================ */
 function GiantMarquee() {
   return (
-    <div className="overflow-hidden border-y border-cream/10 bg-ink/40 py-3 backdrop-blur-sm">
-      <div className="animate-drift flex w-max whitespace-nowrap font-display text-[9vw] uppercase leading-none text-cream/[0.07]">
+    <div className="overflow-hidden border-y border-cyan/20 bg-ink2/70 py-2.5 backdrop-blur-sm">
+      <div className="animate-drift flex w-max whitespace-nowrap font-hero hero-skew text-[6vw] uppercase leading-none text-cyan/80">
         {Array.from({ length: 2 }).map((_, k) => (
-          <span key={k} className="px-5">
-            FIFA COIN · CHAMPIONS MINTED ON-CHAIN · 48 NATIONS · ONE TROPHY ·{" "}
+          <span key={k} className="flex items-center gap-6 px-3">
+            DARE TO MINT <span className="text-cream/30">✦</span> FIFA COIN{" "}
+            <span className="text-cream/30">✦</span> CHAMPIONS ON-CHAIN{" "}
+            <span className="text-cream/30">✦</span>{" "}
           </span>
         ))}
       </div>

@@ -94,6 +94,62 @@ body {
   transform: skewX(-6deg);
 }
 
+/* Animated cyan broadcast scanlines */
+.scanlines-layer {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 221, 255, 0.07) 0px,
+    rgba(0, 221, 255, 0.07) 1px,
+    transparent 2px,
+    transparent 5px
+  );
+  animation: scan 6s linear infinite;
+}
+@keyframes scan {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 100px;
+  }
+}
+
+/* Floating spark particles */
+@keyframes floatUp {
+  0% {
+    transform: translateY(12px) scale(1);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-170px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* Glow pulse for the wordmark */
+@keyframes glowPulse {
+  0%,
+  100% {
+    text-shadow:
+      0 0 28px rgba(0, 221, 255, 0.55),
+      0 0 6px rgba(0, 221, 255, 0.45);
+  }
+  50% {
+    text-shadow:
+      0 0 46px rgba(0, 221, 255, 0.85),
+      0 0 10px rgba(0, 221, 255, 0.6);
+  }
+}
+.glow-pulse {
+  animation: glowPulse 3.4s ease-in-out infinite;
+}
+
 /* Stadium floodlight flicker + crowd shimmer */
 @keyframes floodlight {
   0%,
